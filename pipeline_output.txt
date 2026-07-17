@@ -1,0 +1,60 @@
+meas=  0.025  pred=  0.025  weight=+1.0000+0.0014j
+meas=  3.125  pred=  3.755  weight=+0.9789+0.2043j
+meas=  6.185  pred=  8.504  weight=+0.8940+0.4480j
+meas=  9.300  pred= 12.356  weight=+0.7824+0.6227j
+meas= 12.276  pred= 15.445  weight=+0.6699+0.7424j
+meas= 15.048  pred= 18.061  weight=+0.5620+0.8271j
+meas= 17.684  pred= 20.491  weight=+0.4538+0.8911j
+meas= 20.049  pred= 22.630  weight=+0.3541+0.9352j
+meas= 22.322  pred= 24.714  weight=+0.2545+0.9671j
+meas= 24.287  pred= 26.470  weight=+0.1696+0.9855j
+meas= 25.982  pred= 27.913  weight=+0.0999+0.9950j
+meas= 27.439  pred= 29.113  weight=+0.0423+0.9991j
+meas= 28.486  pred= 29.851  weight=+0.0071+1.0000j
+meas= 29.338  pred= 30.406  weight=-0.0192+0.9998j
+meas= 29.783  pred= 30.536  weight=-0.0254+0.9997j
+meas= 30.088  pred= 30.568  weight=-0.0269+0.9996j
+meas= 29.892  pred= 30.050  weight=-0.0024+1.0000j
+meas= 29.361  pred= 29.151  weight=+0.0405+0.9992j
+meas= 28.460  pred= 27.878  weight=+0.1016+0.9948j
+meas= 27.355  pred= 26.462  weight=+0.1701+0.9854j
+meas= 25.986  pred= 24.829  weight=+0.2490+0.9685j
+meas= 24.204  pred= 22.737  weight=+0.3490+0.9371j
+meas= 22.302  pred= 20.567  weight=+0.4504+0.8928j
+meas= 20.112  pred= 18.136  weight=+0.5588+0.8293j
+meas= 17.651  pred= 15.419  weight=+0.6710+0.7415j
+meas= 14.938  pred= 12.447  weight=+0.7794+0.6265j
+meas= 12.250  pred=  9.601  weight=+0.8658+0.5003j
+meas=  9.248  pred=  6.438  weight=+0.9386+0.3450j
+meas=  6.215  pred=  3.261  weight=+0.9841+0.1777j
+meas=  3.113  pred=  0.066  weight=+1.0000+0.0036j
+meas=  0.008  pred= -3.087  weight=+0.9857-0.1684j
+meas= -3.128  pred= -6.248  weight=+0.9421-0.3353j
+meas= -6.316  pred= -9.467  weight=+0.8694-0.4941j
+meas= -9.287  pred=-12.387  weight=+0.7814-0.6240j
+meas=-12.142  pred=-15.122  weight=+0.6825-0.7308j
+meas=-14.975  pred=-17.858  weight=+0.5707-0.8211j
+meas=-17.625  pred=-20.399  weight=+0.4580-0.8889j
+meas=-20.036  pred=-22.638  weight=+0.3538-0.9353j
+meas=-22.297  pred=-24.711  weight=+0.2546-0.9670j
+meas=-24.320  pred=-26.533  weight=+0.1666-0.9860j
+meas=-26.054  pred=-28.025  weight=+0.0946-0.9955j
+meas=-27.440  pred=-29.116  weight=+0.0422-0.9991j
+meas=-28.542  pred=-29.907  weight=+0.0044-1.0000j
+meas=-29.338  pred=-30.397  weight=-0.0188-0.9998j
+meas=-29.793  pred=-30.533  weight=-0.0252-0.9997j
+meas=-29.953  pred=-30.376  weight=-0.0178-0.9998j
+meas=-29.858  pred=-29.992  weight=+0.0004-1.0000j
+meas=-29.425  pred=-29.262  weight=+0.0351-0.9994j
+meas=-28.510  pred=-27.976  weight=+0.0969-0.9953j
+meas=-27.468  pred=-26.617  weight=+0.1626-0.9867j
+meas=-25.977  pred=-24.806  weight=+0.2501-0.9682j
+meas=-24.252  pred=-22.767  weight=+0.3476-0.9376j
+meas=-22.247  pred=-20.476  weight=+0.4545-0.8908j
+meas=-20.011  pred=-17.980  weight=+0.5655-0.8248j
+meas=-17.642  pred=-15.406  weight=+0.6715-0.7410j
+meas=-14.963  pred=-12.508  weight=+0.7773-0.6291j
+meas=-12.261  pred= -9.637  weight=+0.8649-0.5020j
+meas= -9.270  pred= -6.471  weight=+0.9380-0.3467j
+meas= -6.218  pred= -3.262  weight=+0.9841-0.1778j
+meas= -3.158  pred= -0.119  weight=+1.0000-0.0065j
