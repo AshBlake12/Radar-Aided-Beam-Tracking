@@ -1,0 +1,153 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Fixed-Point Report for covariance_core</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style>
+	body { font-family: monospace; }
+	h2 { font-family: Arial, Helvetica, sans-serif; color: #990000; margin-top: 50px; }
+	table,th,td { border: 1px solid black; }
+	table { margin-top: 30px; }
+	th { align: center; font-weight: bold; }
+	tr.h { background-color: #99CCFF; }
+	tr.a { background-color: #EEEEFF; }
+	tr.b { background-color: #FFFFFF; }
+	tr.c { background-color: #FFA500; }
+	tr.a td, tr.b td { border-style: none; }
+	td.left { text-align: left; }
+	td.right { text-align: right; }
+	td.center { text-align: center; }
+	td.bold { font-weight: bold; }
+	pre { padding: 0px; margin: 0px; }
+	span { font-style: italic; }
+	.code, .code tr, .code th, .code td { border: none; border-collapse: collapse; }
+	.padd { padding-left: 5px; }
+	td.cov, th.cov { width: 50px; height: 20px; text-align: center; font-weight: bold; border-right: 2px solid black; cell-spacing: 0px; }
+	td.cov { vertical-align: top; }
+	td.black { color: #000000; font-weight: bold; padding-top: 4px; }
+	td.white { color: #FFFFFF; font-weight: bold; padding-top: 4px; }
+	.code th { font-weight: bold; border-bottom: 2px solid black; }
+</style>
+</head>
+<body>
+<h3>Generated on  2026-07-19 13:14:35</h3>
+<p>The following table shows fixed point instrumentation results</p>
+<h2>Fixed-Point Report <span>covariance_core<span></h2>
+<TABLE class="code">
+<TR>
+<TH class="cov padd">Simulation Coverage</TH>
+<TH>Code</TH>
+</TR>
+<TR>
+<TD class="cov white" style="background-color: rgb(5,112,9);">100%</TD>
+<TD class="padd"><pre>function [Rtri, valid] = covariance_core(samp_re, samp_im, samp_valid, frame_start)
+%PL block v3: STREAMING covariance accumulator - one SCALAR complex
+% sample per call, matching real ADC/UART ingest (ingest delivers one
+% element at a time) and matching selftest_bram.v's existing native
+% output order exactly (no changes needed there).
+%
+% WHY THE REWRITE (v2 -&gt; v3): v2 took the whole 4x256 frame as one
+% function argument. HDL Coder exposed that as a fully parallel port:
+% 2048 real values x 16 bit = ~32768 wires, tripping "IO Pin Count 33092
+% exceeds threshold 5000" and forcing "4096x faster clock" to squeeze
+% 256 MACs into one base-rate tick. Root cause: batch design instead of
+% streaming. Fix is MathWorks' documented pattern for exactly this -
+% persistent variables as the accumulator (maps to hardware registers),
+% called once per sample. Verified bit-identical to the batch X*X'
+% computation (max diff 0.0) before shipping.
+%
+% Protocol: samples arrive in MATLAB X(:) column-major order, i.e. all
+% M=4 antenna elements of time-sample 1, then all 4 of time-sample 2,
+% etc. (1024 calls with samp_valid=true per 256-sample frame). Buffers
+% 4 consecutive scalar arrivals into one antenna-vector, accumulates
+% its 4x4 outer product, repeats 256 times, then asserts valid+Rtri.
+    persistent R buf pos scount;
+</pre></TD>
+</TR>
+<TR>
+<TD class="cov black" style="background-color: rgb(255,160,118);">Once</TD>
+<TD class="padd"><pre>    if isempty(R)
+        R = complex(zeros(4,4)); buf = complex(zeros(4,1));
+        pos = int32(0); scount = int32(0);
+    end
+</pre></TD>
+</TR>
+<TR>
+<TD class="cov white" style="background-color: rgb(157,38,35);">0%</TD>
+<TD class="padd"><pre>    if frame_start
+        R(:) = complex(zeros(4,4)); pos(:) = int32(0); scount(:) = int32(0);
+    end</pre></TD>
+</TR>
+<TR>
+<TD class="cov white" style="background-color: rgb(5,112,9);">100%</TD>
+<TD class="padd"><pre>
+    valid = false;
+    Rtri = complex(zeros(10,1));
+    if samp_valid
+        buf(pos+1) = complex(samp_re, samp_im);
+</pre></TD>
+</TR>
+<TR>
+<TD class="cov black" style="background-color: rgb(178,210,174);">25%</TD>
+<TD class="padd"><pre>        if pos == 3                          % 4th element of this snapshot arrived
+            R(:) = R + (buf * buf');         % one outer-product MAC (DSP48-style)
+            scount(:) = scount + 1;
+            pos(:) = int32(0);
+</pre></TD>
+</TR>
+<TR>
+<TD class="cov white" style="background-color: rgb(157,38,35);">0%</TD>
+<TD class="padd"><pre>            if scount == 256
+                Rs = R * (2^-8);             % = /256, exact, HDL-safe (no divider)
+                idx = 1;
+</pre></TD>
+</TR>
+<TR>
+<TD class="cov white" style="background-color: rgb(5,112,9);">100%</TD>
+<TD class="padd"><pre>                for i=1:4
+                    for j=i:4
+                        Rtri(idx) = Rs(i,j); idx = idx+1;
+                    end
+                end
+                valid = true;
+                scount(:) = int32(0);
+            end
+        else
+            pos(:) = pos + 1;
+        end
+    end
+end</pre></TD>
+</TR>
+</TABLE>
+<TABLE><TR class="h"><th>Variable Name</th><th>Type</th><th>Sim Min</th><th>Sim Max</th><th>Static Min</th><th>Static Max</th><th>Whole Number</th><th>ProposedType <BR /> (Best For WL = 16)</th></TR><TR class="a">
+<TD class="left bold">R*</TD><TD class="left">double 4 x 4 complex </TD><TD class="right">-302.55067154990644</TD><TD class="right">305.5627231453228</TD><TD class="right"></TD><TD class="right"></TD><TD class="left">No</TD><TD class="left">numerictype(1, 40, 30)</TD></TR>
+<TR class="b">
+<TD class="left">Rs</TD><TD class="left">double 4 x 4 complex </TD><TD class="right">-1.181838560741822</TD><TD class="right">1.1936043872864173</TD><TD class="right"></TD><TD class="right"></TD><TD class="left">No</TD><TD class="left">numerictype(1, 16, 14)</TD></TR>
+<TR class="a">
+<TD class="left">Rtri</TD><TD class="left">double 10 x 1 complex </TD><TD class="right">-1.1704027541046105</TD><TD class="right">1.1936043872864173</TD><TD class="right"></TD><TD class="right"></TD><TD class="left">No</TD><TD class="left">numerictype(1, 16, 14)</TD></TR>
+<TR class="b">
+<TD class="left">buf</TD><TD class="left">double 4 x 1 complex </TD><TD class="right">-2.788372823038211</TD><TD class="right">3.0736807727168265</TD><TD class="right"></TD><TD class="right"></TD><TD class="left">No</TD><TD class="left">numerictype(1, 16, 13)</TD></TR>
+<TR class="a">
+<TD class="left">frame_start</TD><TD class="left">logical</TD><TD class="right">0</TD><TD class="right">1</TD><TD class="right"></TD><TD class="right"></TD><TD class="left">Yes</TD><TD class="left">numerictype(0, 1, 0)</TD></TR>
+<TR class="b">
+<TD class="left">i</TD><TD class="left">double</TD><TD class="right">1</TD><TD class="right">4</TD><TD class="right"></TD><TD class="right"></TD><TD class="left">Yes</TD><TD class="left">numerictype(0, 3, 0)</TD></TR>
+<TR class="a">
+<TD class="left">idx</TD><TD class="left">double</TD><TD class="right">1</TD><TD class="right">11</TD><TD class="right"></TD><TD class="right"></TD><TD class="left">Yes</TD><TD class="left">numerictype(0, 4, 0)</TD></TR>
+<TR class="b">
+<TD class="left">j</TD><TD class="left">double</TD><TD class="right">1</TD><TD class="right">4</TD><TD class="right"></TD><TD class="right"></TD><TD class="left">Yes</TD><TD class="left">numerictype(0, 3, 0)</TD></TR>
+<TR class="a">
+<TD class="left">pos</TD><TD class="left">int32</TD><TD class="right">0</TD><TD class="right">3</TD><TD class="right"></TD><TD class="right"></TD><TD class="left">Yes</TD><TD class="left">numerictype(0, 2, 0)</TD></TR>
+<TR class="b">
+<TD class="left">samp_im</TD><TD class="left">double</TD><TD class="right">-2.7691287122077974</TD><TD class="right">3.0736807727168265</TD><TD class="right"></TD><TD class="right"></TD><TD class="left">No</TD><TD class="left">numerictype(1, 16, 13)</TD></TR>
+<TR class="a">
+<TD class="left">samp_re</TD><TD class="left">double</TD><TD class="right">-2.788372823038211</TD><TD class="right">2.990109025103664</TD><TD class="right"></TD><TD class="right"></TD><TD class="left">No</TD><TD class="left">numerictype(1, 16, 13)</TD></TR>
+<TR class="b">
+<TD class="left">samp_valid</TD><TD class="left">logical</TD><TD class="right">1</TD><TD class="right">1</TD><TD class="right"></TD><TD class="right"></TD><TD class="left">Yes</TD><TD class="left">numerictype(0, 1, 0)</TD></TR>
+<TR class="a">
+<TD class="left">scount</TD><TD class="left">int32</TD><TD class="right">0</TD><TD class="right">256</TD><TD class="right"></TD><TD class="right"></TD><TD class="left">Yes</TD><TD class="left">numerictype(0, 9, 0)</TD></TR>
+<TR class="b">
+<TD class="left">valid</TD><TD class="left">logical</TD><TD class="right">0</TD><TD class="right">1</TD><TD class="right"></TD><TD class="right"></TD><TD class="left">Yes</TD><TD class="left">numerictype(0, 1, 0)</TD></TR>
+</TABLE>
+
+</body>
+</html>

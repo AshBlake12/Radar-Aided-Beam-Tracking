@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" itemscope itemtype="https://www.mathworks.com/help/schema/MathWorksDocPage">
+<head>
+<title>HDL Code Generation Conformance Report for covariance_core_fixpt.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<script type="text/javascript" src="file://C:/Program%20Files/MATLAB/R2025a/toolbox/hdlcoder/hdlcommon/js_css/jquery-1.7.1.js"></script>
+<script type="text/javascript" src="file://C:/Program%20Files/MATLAB/R2025a/toolbox/hdlcoder/hdlcommon/js_css/docscripts.js"></script>
+        
+        <link href="file://C:/Program%20Files/MATLAB/R2025a/toolbox/hdlcoder/hdlcommon/js_css/ice_960.css" rel="stylesheet" type="text/css">
+        <link href="file://C:/Program%20Files/MATLAB/R2025a/toolbox/hdlcoder/hdlcommon/js_css/HDLsite5.css" rel="stylesheet" type="text/css">
+        <link href="file://C:/Program%20Files/MATLAB/R2025a/toolbox/hdlcoder/hdlcommon/js_css/ice_doc_center.css" rel="stylesheet" type="text/css">
+        <link href="file://C:/Program%20Files/MATLAB/R2025a/toolbox/hdlcoder/hdlcommon/js_css/ice_doc_center_installed.css" rel="stylesheet" type="text/css">
+        <link href="file://C:/Program%20Files/MATLAB/R2025a/toolbox/hdlcoder/hdlcommon/js_css/ice_doc_center_print.css" rel="stylesheet" type="text/css" media="print">
+        <script type="text/javascript">
+            if (navigator.appName != "ICEbrowser") {
+            var cssStyleSheets = $("link").filter(function(){
+            var href = $(this).attr('href');
+            return href.indexOf("ice_doc_center_print.css") == -1});
+            var hrefElements = $.map(cssStyleSheets, function(elem) {
+            var href = $(elem).attr('href');
+            var hrefArray = href.split("/");
+            hrefArray[hrefArray.length - 1] = hrefArray[hrefArray.length - 1].replace("ice_", "");
+            return {
+            href: hrefArray.join("/"),
+            media: $(elem).attr('media')
+            };
+            });
+            cssStyleSheets.remove();
+            for (var i = 0; i < hrefElements.length; i++) {
+            if ($.browser.msie && $.browser.version <= 8) {
+            document.createStyleSheet(hrefElements[i].href);
+            } else {
+            var link = $('<link rel="stylesheet" href=' + hrefElements[i].href + ' type="text/css" />');
+            if (hrefElements[i].media) {
+            link.attr('media', hrefElements[i].media);
+            }
+            $('head').append(link);
+            }
+            }
+            }
+    </script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+<div class="container_192">
+<div class="grid_192">
+ <div class="page_container"><div class="content_frame">
+ <BR/> <BR/><DIV ><H1>HDL Code Generation Conformance Report for covariance_core_fixpt.
+</H1>
+<BR><H2>Generated on 2026-07-19 11:40:58</h2></DIV>
+<div class="content_container"><H3>HDL Conformance check complete with 0 errors, 4 warnings, and 1 messages.</H3><BR/></DIV>
+<DIV class="content_container"><TABLE class="tabledata">
+<TR><TD> <B>Function Location</B> </TD><TD>Level<B></B> </TD><TD> <B>Description</B> </TD></TR><TR><TD>
+<a alt="hdlcoder:matlabhdlcoder:LoopStateVarUse" href="matlab:matlab.desktop.editor.openAndGoToLine('C:\Users\Shashank Madhusudan\OneDrive\Desktop\Radar-Aided-Beam-Tracking\codegen\covariance_core\fixpt\covariance_core_fixpt.m', 0);">covariance_core_fixpt:0</a></TD>
+<TD>Warning</TD>
+<TD>'R' : Loop streaming failed because a state variable, 'R', is being defined both inside and outside the loop.</TD>
+</TR>
+<TR><TD>
+<a alt="hdlcoder:matlabhdlcoder:RamNonScalarAccess" href="matlab:matlab.desktop.editor.openAndGoToLine('C:\Users\Shashank Madhusudan\OneDrive\Desktop\Radar-Aided-Beam-Tracking\codegen\covariance_core\fixpt\covariance_core_fixpt.m', 30);">covariance_core_fixpt:30</a></TD>
+<TD>Warning</TD>
+<TD>'R' : RAM mapping failed for variable, 'R', because it has a non-scalar sub-matrix access.</TD>
+</TR>
+<TR><TD>
+<a alt="hdlcoder:matlabhdlcoder:RamThresholUnmet" href="matlab:matlab.desktop.editor.openAndGoToLine('C:\Users\Shashank Madhusudan\OneDrive\Desktop\Radar-Aided-Beam-Tracking\codegen\covariance_core\fixpt\covariance_core_fixpt.m', 30);">covariance_core_fixpt:30</a></TD>
+<TD>Warning</TD>
+<TD>'buf' : RAM mapping not performed for variable, 'buf', because it does not meet the RAM mapping threshold requirement.</TD>
+</TR>
+<TR><TD>
+<a alt="hdlcoder:matlabhdlcoder:RamThresholUnmet" href="matlab:matlab.desktop.editor.openAndGoToLine('C:\Users\Shashank Madhusudan\OneDrive\Desktop\Radar-Aided-Beam-Tracking\codegen\covariance_core\fixpt\covariance_core_fixpt.m', 0);">covariance_core_fixpt:0</a></TD>
+<TD>Warning</TD>
+<TD>'Rtri' : RAM mapping not performed for variable, 'Rtri', because it does not meet the RAM mapping threshold requirement.</TD>
+</TR>
+<TR><TD>
+<a alt="hdlcoder:hdldisp:OversampleMessage" href="matlab:matlab.desktop.editor.openAndGoToLine('C:\Users\Shashank Madhusudan\OneDrive\Desktop\Radar-Aided-Beam-Tracking\codegen\covariance_core\fixpt\covariance_core_fixpt.m', 1);">covariance_core_fixpt:1</a></TD>
+<TD>Message</TD>
+<TD>MESSAGE: The design requires 80 times faster clock with respect to the base rate = 1.</TD>
+</TR>
+</TABLE></DIV>
+<BR><table class="table_header"><TR><TH><H3>MATLAB Project Info</H3></TH></TR><TR class="datatable2"><TD><H4><b>Number of MATLAB files</b></H4></TD><TD><H4>1</H4></TD></TR><TR class="datatable2"><TD><H4><b>Number of MATLAB lines</b></H4></TD><TD><H4>90</H4></TD></TR></table class="table_footer"><BR><BR><table class="table_header"><TR><TH><H3>Toolbox Usage</H3></TH></TR><TR class="datatable2"><TD><H4>Name</H4></TD><TD><H4>coder<BR>fixedpoint<BR>matlab</H4></TD></TR></table><BR><BR><BR><table class="table_header"><TR><TH><H3>Toolbox Function Usage: Supported List</H3></TH></TR><TR class="datatable2"><TD><H4><b>fixedpoint/fixedpoint</b></H4></TD><TD><H4>  fimath<BR>  isfi</H4></TD></TR><TR class="datatable2"><TD><H4><b>matlab/datatypes</b></H4></TD><TD><H4>  int32</H4></TD></TR><TR class="datatable2"><TD><H4><b>matlab/elfun</b></H4></TD><TD><H4>  complex</H4></TD></TR><TR class="datatable2"><TD><H4><b>matlab/elmat</b></H4></TD><TD><H4>  false<BR>  isempty<BR>  true<BR>  zeros</H4></TD></TR><TR class="datatable2"><TD><H4><b>matlab/lang</b></H4></TD><TD><H4>  nargin</H4></TD></TR></table class="table_footer"><BR><BR><BR><table class="table_header"><TR><TH><H3>Toolbox Function Usage: Unsupported List</H3></TH></TR><TR class="datatable2"><TD><H4><b>coder/matlabcoder</b></H4></TD><TD><H4>  coder</H4></TD></TR><TR class="datatable2"><TD><H4><b>fixedpoint/fixedpoint</b></H4></TD><TD><H4></H4></TD></TR></table class="table_footer"><BR><script><!--
+function hdlTableShrink(o,tagNameStr)
+{
+var temp = document.getElementsByName(tagNameStr);
+if (temp[0].style.display == "")
+{
+temp[0].style.display = "none";
+o.innerHTML = '<span style="font-family:monospace">[+]</span>';
+}
+else
+{
+temp[0].style.display = "";
+o.innerHTML = '<span style="font-family:monospace">[-]</span>';
+}
+}
+// --></script><BR><table class="table_header"><TR><TH><H3>List of functions called from within each file</H3></TH></TR><TR class="datatable2"><TD><H4>NONE</H4></TD></TR></table><BR><BR><table class="table_header"><TR><TH><H3>Function calls requiring attention</H3></TH></TR><TR class="datatable2"><TD><H4><b>covariance_core_fixpt</b></H4></TD><TD><H4>coder<BR>fi<BR>fixed</H4></TD></TR>
+</table><BR><table class="table_header"><TR><TH><H3>Call Tree Report (files called on the path)</H3></TH></TR>
+<TR class="datatable"><TD><UL><li><H4><a href="matlab:matlab.desktop.editor.openDocument('C:\Users\Shashank Madhusudan\OneDrive\Desktop\Radar-Aided-Beam-Tracking\codegen\covariance_core\fixpt\covariance_core_fixpt.m');">covariance_core_fixpt</a></H4></li></ul></TD></TR></TABLE class="table_footer"><BR><BR> </div></div></div></div>
+                    <div class="grid_192">
+                        <div class="footer_container">
+                            <div class="footer">
+                                <ul class="footernav">
+                                    <li class="footernav_trademarks"><a href="C:/Program Files/MATLAB/R2025a/help/acknowledgments.html">Acknowledgments</a></li>
+                                    <li class="footernav_trademarks"><a href="C:/Program%20Files/MATLAB/R2025a/trademarks.txt">Trademarks</a></li>
+                                    <li class="footernav_patents"><a href="C:/Program%20Files/MATLAB/R2025a/patents.txt">Patents</a></li>
+                                    <li class="footernav_help"><a href="C:/Program Files/MATLAB/R2025a/license_agreement.txt">Terms of Use</a></li>
+                                </ul>
+                                <div class="copyright">&copy; 1994-2026 The MathWorks, Inc.</div>
+                            </div>
+                        </div>
+                    </div>
+
+        <script type="text/javascript">
+
+$(document).ready( setTimeout( function () {
+                   $(".expandAllLink").trigger('click');
+            }, 50 ) );
+
+        </script>
+        
+</body>
+</html>

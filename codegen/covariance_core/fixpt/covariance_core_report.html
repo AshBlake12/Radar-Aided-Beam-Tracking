@@ -1,0 +1,151 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Fixed-Point Report for covariance_core</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style>
+	body { font-family: monospace; }
+	h2 { font-family: Arial, Helvetica, sans-serif; color: #990000; margin-top: 50px; }
+	table,th,td { border: 1px solid black; }
+	table { margin-top: 30px; }
+	th { align: center; font-weight: bold; }
+	tr.h { background-color: #99CCFF; }
+	tr.a { background-color: #EEEEFF; }
+	tr.b { background-color: #FFFFFF; }
+	tr.c { background-color: #FFA500; }
+	tr.a td, tr.b td { border-style: none; }
+	td.left { text-align: left; }
+	td.right { text-align: right; }
+	td.center { text-align: center; }
+	td.bold { font-weight: bold; }
+	pre { padding: 0px; margin: 0px; }
+	span { font-style: italic; }
+	.code, .code tr, .code th, .code td { border: none; border-collapse: collapse; }
+	.padd { padding-left: 5px; }
+	td.cov, th.cov { width: 50px; height: 20px; text-align: center; font-weight: bold; border-right: 2px solid black; cell-spacing: 0px; }
+	td.cov { vertical-align: top; }
+	td.black { color: #000000; font-weight: bold; padding-top: 4px; }
+	td.white { color: #FFFFFF; font-weight: bold; padding-top: 4px; }
+	.code th { font-weight: bold; border-bottom: 2px solid black; }
+</style>
+</head>
+<body>
+<h3>Generated on  2026-07-19 15:08:32</h3>
+<p>The following table shows fixed point instrumentation results</p>
+<h2>Fixed-Point Report <span>covariance_core<span></h2>
+<TABLE class="code">
+<TR>
+<TH class="cov padd">Simulation Coverage</TH>
+<TH>Code</TH>
+</TR>
+<TR>
+<TD class="cov white" style="background-color: rgb(5,112,9);">100%</TD>
+<TD class="padd"><pre>function [Rtri, valid] = covariance_core(samp_re, samp_im, samp_valid, frame_start)
+%PL block v4: streaming covariance - SCALAR-ACCESS accumulation.
+% v3 used R(:) = R + (buf*buf'): a whole-matrix read-modify-write. HDL
+% conformance warned "'R': RAM mapping failed ... non-scalar sub-matrix
+% access" / "unable to apply vector streaming". Under StreamLoops that
+% matrix RMW is scheduled across sub-rate phases and the R read races
+% its own writeback: generated RTL retains ~1 snapshot of 256 (verified:
+% MathWorks' own generated TB fails identically in Vivado AND Verilator
+% while the sequential fixed-point MATLAB sim passes). v4 does what the
+% warning asks: explicit scalar element updates only.
+    persistent Rr Ri buf_r buf_i pos scount;
+</pre></TD>
+</TR>
+<TR>
+<TD class="cov black" style="background-color: rgb(255,160,118);">Once</TD>
+<TD class="padd"><pre>    if isempty(Rr)
+        Rr = zeros(4,4); Ri = zeros(4,4);
+        buf_r = zeros(4,1); buf_i = zeros(4,1);
+        pos = int32(0); scount = int32(0);
+    end
+</pre></TD>
+</TR>
+<TR>
+<TD class="cov white" style="background-color: rgb(157,38,35);">0%</TD>
+<TD class="padd"><pre>    if frame_start
+        for i=1:4
+            for j=1:4
+                Rr(i,j) = 0; Ri(i,j) = 0;      % scalar resets
+            end
+        end
+        pos(:) = int32(0); scount(:) = int32(0);
+    end
+    valid = false;
+    Rtri = complex(zeros(10,1));
+</pre></TD>
+</TR>
+<TR>
+<TD class="cov white" style="background-color: rgb(5,112,9);">100%</TD>
+<TD class="padd"><pre>    if samp_valid
+        buf_r(pos+1) = samp_re; buf_i(pos+1) = samp_im;
+</pre></TD>
+</TR>
+<TR>
+<TD class="cov black" style="background-color: rgb(178,210,174);">25%</TD>
+<TD class="padd"><pre>        if pos == 3
+</pre></TD>
+</TR>
+<TR>
+<TD class="cov white" style="background-color: rgb(5,112,9);">100%</TD>
+<TD class="padd"><pre>            for i = 1:4                          % scalar-only outer product:
+                for j = 1:4                      % R(i,j) += x_i * conj(x_j)
+                    Rr(i,j) = Rr(i,j) + (buf_r(i)*buf_r(j) + buf_i(i)*buf_i(j));
+                    Ri(i,j) = Ri(i,j) + (buf_i(i)*buf_r(j) - buf_r(i)*buf_i(j));
+                end
+            end
+            scount(:) = scount + 1;
+            pos(:) = int32(0);
+            if scount == 256
+                idx = 1;
+                for i=1:4
+                    for j=i:4
+                        Rtri(idx) = complex(Rr(i,j)*(2^-8), Ri(i,j)*(2^-8));
+                        idx = idx + 1;           % *(2^-8) = /256, shift
+                    end
+                end
+                valid = true;
+                scount(:) = int32(0);
+            end
+        else
+            pos(:) = pos + 1;
+        end
+    end
+end</pre></TD>
+</TR>
+</TABLE>
+<TABLE><TR class="h"><th>Variable Name</th><th>Type</th><th>Sim Min</th><th>Sim Max</th><th>Static Min</th><th>Static Max</th><th>Whole Number</th><th>ProposedType <BR /> (Best For WL = 16)</th></TR><TR class="a">
+<TD class="left">Ri</TD><TD class="left">double 4 x 4 </TD><TD class="right">-302.55067154990644</TD><TD class="right">302.55067154990644</TD><TD class="right"></TD><TD class="right"></TD><TD class="left">No</TD><TD class="left">numerictype(1, 16, 6)</TD></TR>
+<TR class="b">
+<TD class="left">Rr</TD><TD class="left">double 4 x 4 </TD><TD class="right">-299.6231050507803</TD><TD class="right">305.5627231453228</TD><TD class="right"></TD><TD class="right"></TD><TD class="left">No</TD><TD class="left">numerictype(1, 16, 6)</TD></TR>
+<TR class="a">
+<TD class="left">Rtri</TD><TD class="left">double 10 x 1 complex </TD><TD class="right">-1.1704027541046105</TD><TD class="right">1.1936043872864173</TD><TD class="right"></TD><TD class="right"></TD><TD class="left">No</TD><TD class="left">numerictype(1, 16, 14)</TD></TR>
+<TR class="b">
+<TD class="left">buf_i</TD><TD class="left">double 4 x 1 </TD><TD class="right">-2.7691287122077974</TD><TD class="right">3.0736807727168265</TD><TD class="right"></TD><TD class="right"></TD><TD class="left">No</TD><TD class="left">numerictype(1, 16, 13)</TD></TR>
+<TR class="a">
+<TD class="left">buf_r</TD><TD class="left">double 4 x 1 </TD><TD class="right">-2.788372823038211</TD><TD class="right">2.990109025103664</TD><TD class="right"></TD><TD class="right"></TD><TD class="left">No</TD><TD class="left">numerictype(1, 16, 13)</TD></TR>
+<TR class="b">
+<TD class="left">frame_start</TD><TD class="left">logical</TD><TD class="right">0</TD><TD class="right">1</TD><TD class="right"></TD><TD class="right"></TD><TD class="left">Yes</TD><TD class="left">numerictype(0, 1, 0)</TD></TR>
+<TR class="a">
+<TD class="left">i</TD><TD class="left">double</TD><TD class="right">1</TD><TD class="right">4</TD><TD class="right"></TD><TD class="right"></TD><TD class="left">Yes</TD><TD class="left">numerictype(0, 3, 0)</TD></TR>
+<TR class="b">
+<TD class="left">idx</TD><TD class="left">double</TD><TD class="right">1</TD><TD class="right">11</TD><TD class="right"></TD><TD class="right"></TD><TD class="left">Yes</TD><TD class="left">numerictype(0, 4, 0)</TD></TR>
+<TR class="a">
+<TD class="left">j</TD><TD class="left">double</TD><TD class="right">1</TD><TD class="right">4</TD><TD class="right"></TD><TD class="right"></TD><TD class="left">Yes</TD><TD class="left">numerictype(0, 3, 0)</TD></TR>
+<TR class="b">
+<TD class="left">pos</TD><TD class="left">int32</TD><TD class="right">0</TD><TD class="right">3</TD><TD class="right"></TD><TD class="right"></TD><TD class="left">Yes</TD><TD class="left">numerictype(0, 2, 0)</TD></TR>
+<TR class="a">
+<TD class="left">samp_im</TD><TD class="left">double</TD><TD class="right">-2.7691287122077974</TD><TD class="right">3.0736807727168265</TD><TD class="right"></TD><TD class="right"></TD><TD class="left">No</TD><TD class="left">numerictype(1, 16, 13)</TD></TR>
+<TR class="b">
+<TD class="left">samp_re</TD><TD class="left">double</TD><TD class="right">-2.788372823038211</TD><TD class="right">2.990109025103664</TD><TD class="right"></TD><TD class="right"></TD><TD class="left">No</TD><TD class="left">numerictype(1, 16, 13)</TD></TR>
+<TR class="a">
+<TD class="left">samp_valid</TD><TD class="left">logical</TD><TD class="right">1</TD><TD class="right">1</TD><TD class="right"></TD><TD class="right"></TD><TD class="left">Yes</TD><TD class="left">numerictype(0, 1, 0)</TD></TR>
+<TR class="b">
+<TD class="left">scount</TD><TD class="left">int32</TD><TD class="right">0</TD><TD class="right">256</TD><TD class="right"></TD><TD class="right"></TD><TD class="left">Yes</TD><TD class="left">numerictype(0, 9, 0)</TD></TR>
+<TR class="a">
+<TD class="left">valid</TD><TD class="left">logical</TD><TD class="right">0</TD><TD class="right">1</TD><TD class="right"></TD><TD class="right"></TD><TD class="left">Yes</TD><TD class="left">numerictype(0, 1, 0)</TD></TR>
+</TABLE>
+
+</body>
+</html>

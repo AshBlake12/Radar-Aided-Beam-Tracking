@@ -1,0 +1,45 @@
+﻿# MATLAB / HDL Coder Generated Files
+*.mat
+*.mexw64
+cache_dir/
+fxptmp/
+reports/
+#html/
+#*.html
+
+# Simulation Data & Test outputs
+*.dat
+pipeline_output.txt
+# Note: *.csv and *.hex are NOT ignored by default just in case 
+# frames.csv or stim_X.hex are required input files. 
+# Uncomment the below if they are purely generated outputs:
+# *.csv
+# *.hex
+
+# Executables and compiled objects
+*.exe
+*.o
+*.d
+*.a
+*.gch
+
+# Verilator artifacts
+obj_dir/
+
+# Vivado / Xilinx artifacts
+*.log
+*.jou
+*.pb
+*.wdb
+*.str
+xsim.dir/
+.Xil/
+
+# Vitis / Eclipse IDE
+Vitis-ide-files/*/Debug/
+Vitis-ide-files/*/Release/
+.metadata/
+
+# OS specific files
+.DS_Store
+Thumbs.db

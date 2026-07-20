@@ -1,0 +1,55 @@
+onbreak resume
+onerror resume
+vsim -voptargs=+acc work.covariance_core_fixpt_tb
+
+add wave sim:/covariance_core_fixpt_tb/u_covariance_core_fixpt/clk
+add wave sim:/covariance_core_fixpt_tb/u_covariance_core_fixpt/reset
+add wave sim:/covariance_core_fixpt_tb/u_covariance_core_fixpt/clk_enable
+add wave sim:/covariance_core_fixpt_tb/u_covariance_core_fixpt/samp_re
+add wave sim:/covariance_core_fixpt_tb/u_covariance_core_fixpt/samp_im
+add wave sim:/covariance_core_fixpt_tb/u_covariance_core_fixpt/samp_valid
+add wave sim:/covariance_core_fixpt_tb/u_covariance_core_fixpt/frame_start
+add wave sim:/covariance_core_fixpt_tb/u_covariance_core_fixpt/ce_out
+add wave sim:/covariance_core_fixpt_tb/u_covariance_core_fixpt/Rtri_re_0
+add wave sim:/covariance_core_fixpt_tb/Rtri_re_0_ref
+add wave sim:/covariance_core_fixpt_tb/u_covariance_core_fixpt/Rtri_re_1
+add wave sim:/covariance_core_fixpt_tb/Rtri_re_1_ref
+add wave sim:/covariance_core_fixpt_tb/u_covariance_core_fixpt/Rtri_re_2
+add wave sim:/covariance_core_fixpt_tb/Rtri_re_2_ref
+add wave sim:/covariance_core_fixpt_tb/u_covariance_core_fixpt/Rtri_re_3
+add wave sim:/covariance_core_fixpt_tb/Rtri_re_3_ref
+add wave sim:/covariance_core_fixpt_tb/u_covariance_core_fixpt/Rtri_re_4
+add wave sim:/covariance_core_fixpt_tb/Rtri_re_4_ref
+add wave sim:/covariance_core_fixpt_tb/u_covariance_core_fixpt/Rtri_re_5
+add wave sim:/covariance_core_fixpt_tb/Rtri_re_5_ref
+add wave sim:/covariance_core_fixpt_tb/u_covariance_core_fixpt/Rtri_re_6
+add wave sim:/covariance_core_fixpt_tb/Rtri_re_6_ref
+add wave sim:/covariance_core_fixpt_tb/u_covariance_core_fixpt/Rtri_re_7
+add wave sim:/covariance_core_fixpt_tb/Rtri_re_7_ref
+add wave sim:/covariance_core_fixpt_tb/u_covariance_core_fixpt/Rtri_re_8
+add wave sim:/covariance_core_fixpt_tb/Rtri_re_8_ref
+add wave sim:/covariance_core_fixpt_tb/u_covariance_core_fixpt/Rtri_re_9
+add wave sim:/covariance_core_fixpt_tb/Rtri_re_9_ref
+add wave sim:/covariance_core_fixpt_tb/u_covariance_core_fixpt/Rtri_im_0
+add wave sim:/covariance_core_fixpt_tb/Rtri_im_0_ref
+add wave sim:/covariance_core_fixpt_tb/u_covariance_core_fixpt/Rtri_im_1
+add wave sim:/covariance_core_fixpt_tb/Rtri_im_1_ref
+add wave sim:/covariance_core_fixpt_tb/u_covariance_core_fixpt/Rtri_im_2
+add wave sim:/covariance_core_fixpt_tb/Rtri_im_2_ref
+add wave sim:/covariance_core_fixpt_tb/u_covariance_core_fixpt/Rtri_im_3
+add wave sim:/covariance_core_fixpt_tb/Rtri_im_3_ref
+add wave sim:/covariance_core_fixpt_tb/u_covariance_core_fixpt/Rtri_im_4
+add wave sim:/covariance_core_fixpt_tb/Rtri_im_4_ref
+add wave sim:/covariance_core_fixpt_tb/u_covariance_core_fixpt/Rtri_im_5
+add wave sim:/covariance_core_fixpt_tb/Rtri_im_5_ref
+add wave sim:/covariance_core_fixpt_tb/u_covariance_core_fixpt/Rtri_im_6
+add wave sim:/covariance_core_fixpt_tb/Rtri_im_6_ref
+add wave sim:/covariance_core_fixpt_tb/u_covariance_core_fixpt/Rtri_im_7
+add wave sim:/covariance_core_fixpt_tb/Rtri_im_7_ref
+add wave sim:/covariance_core_fixpt_tb/u_covariance_core_fixpt/Rtri_im_8
+add wave sim:/covariance_core_fixpt_tb/Rtri_im_8_ref
+add wave sim:/covariance_core_fixpt_tb/u_covariance_core_fixpt/Rtri_im_9
+add wave sim:/covariance_core_fixpt_tb/Rtri_im_9_ref
+add wave sim:/covariance_core_fixpt_tb/u_covariance_core_fixpt/valid
+add wave sim:/covariance_core_fixpt_tb/valid_ref
+run -all
